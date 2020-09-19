@@ -6,24 +6,32 @@ from getImage import request
 
 
 def check():
+
     f = Image.open("test.jpg")
+    for f in which_file(f):
+        lists = getList(f)
+        if lists.__len__() == 9:
+            return lists
 
+
+def getList(fp):
+    f = Image.open("test.jpg")
     base = 300
-    fp = which_file(f)
-    list = []
-
+    lists = list()
     for i in range(3):
         for j in range(3):
             box = (base * j, base * i, base * (j + 1), base * (i + 1))
             region = f.crop(box)
 
             if is_zero(region):
-                list.append(0)
+                lists.append(0)
             else:
                 s = number(region, fp)
-                list.append(s)
+                if s == 10:
+                    return lists
+                lists.append(s)
 
-    return list
+    return lists
 
 
 def number(re, fp):
@@ -36,6 +44,8 @@ def number(re, fp):
 
             if compare_images(re, region):
                 return i * 3 + j + 1
+
+    return 10
 
 
 def which_file(f):
@@ -51,7 +61,7 @@ def which_file(f):
     for file in files:
         if is_in(path + '/' + file, region):
             print(file)
-            return path + '/' + file
+            yield path + '/' + file
 
 
 def is_in(fp, r):
