@@ -6,15 +6,13 @@ class Square(object):
     to = 0
     xth = 0
 
-    def __init__(self, l):
-        self.square = [l[0:3], l[3:6], l[6:9]]
-        self.step = 0
-        self.path = ""
-        for i in range(3):
-            for j in range(3):
-                if self.square[i][j] == 0:
-                    self.i = i
-                    self.j = j
+    def __init__(self, l1, l2, l3, step, is_swaped, path, i, j):
+        self.square = [l1, l2, l3]
+        self.step = step
+        self.is_swaped = is_swaped
+        self.path = path
+        self.i = i
+        self.j = j
 
     def __eq__(self, other):  # 比较两个对象是否相等的函数
         for i in range(3):
@@ -24,7 +22,7 @@ class Square(object):
         return True
 
     def __hash__(self):
-        t = 0
+        t = self.is_swaped
         for i in range(3):
             for j in range(3):
                 t = t*10 + self.square[i][j]
@@ -39,14 +37,15 @@ class Square(object):
 
     def swap(self):
         if self.step == self.xth:
-            # t = self.square[int(self.orig / 3)][int(self.orig % 3)]
-            # self.square[int(self.orig / 3)][int(self.orig % 3)] = self.square[int(self.to / 3)][int(self.to % 3)]
-            # self.square[int(self.to / 3)][int(self.to % 3)] = t
-            print("swap")
+            t = self.square[int(self.orig / 3)][int(self.orig % 3)]
+            self.square[int(self.orig / 3)][int(self.orig % 3)] = self.square[int(self.to / 3)][int(self.to % 3)]
+            self.square[int(self.to / 3)][int(self.to % 3)] = t
+            self.is_swaped = 1
 
     def up_mov(self):
         if self.i != 0:
-            p2 = copy.deepcopy(self)
+            p2 = Square(list(self.square[0]), list(self.square[1]), list(self.square[2]),
+                        self.step, self.is_swaped, self.path, self.i, self.j)
             p2.square[p2.i][p2.j] = p2.square[p2.i - 1][p2.j]
             p2.square[p2.i - 1][p2.j] = 0
             p2.i -= 1
@@ -59,7 +58,8 @@ class Square(object):
 
     def down_mov(self):
         if self.i != 2:
-            p2 = copy.deepcopy(self)
+            p2 = Square(list(self.square[0]), list(self.square[1]), list(self.square[2]),
+                        self.step, self.is_swaped, self.path, self.i, self.j)
             p2.square[p2.i][p2.j] = p2.square[p2.i + 1][p2.j]
             p2.square[p2.i + 1][p2.j] = 0
             p2.i += 1
@@ -72,7 +72,8 @@ class Square(object):
 
     def left_mov(self):
         if self.j != 0:
-            p2 = copy.deepcopy(self)
+            p2 = Square(list(self.square[0]), list(self.square[1]), list(self.square[2]),
+                        self.step, self.is_swaped, self.path, self.i, self.j)
             p2.square[p2.i][p2.j] = p2.square[p2.i][p2.j - 1]
             p2.square[p2.i][p2.j - 1] = 0
             p2.j -= 1
@@ -85,7 +86,8 @@ class Square(object):
 
     def right_mov(self):
         if self.j != 2:
-            p2 = copy.deepcopy(self)
+            p2 = Square(list(self.square[0]), list(self.square[1]), list(self.square[2]),
+                        self.step, self.is_swaped, self.path, self.i, self.j)
             p2.square[p2.i][p2.j] = p2.square[p2.i][p2.j + 1]
             p2.square[p2.i][p2.j + 1] = 0
             p2.j += 1
