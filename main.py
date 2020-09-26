@@ -1,6 +1,4 @@
-from queue import Queue
-
-from Square_Nine import Square
+import os
 from getImage import ImageDeal
 
 if __name__ == '__main__':
@@ -14,41 +12,17 @@ if __name__ == '__main__':
     print(swap)
     print(uuid)
 
-    Square.orig = swap[0]
-    Square.to = swap[1]
-    Square.xth = step
+    cpp = "algorithm.exe "
+    s = ""
 
-    for i in range(3):
-        for j in range(3):
-            if l[i * 3 + j] == 0:
-                x = i
-                y = j
+    for i in range(9):
+        s += str(l[i])
+        s += " "
+    s = s + str(step) + " " + str(swap[0]) + " " + str(swap[1])
 
-    s = Square(l[0:3], l[3:6], l[6:9], 0, 0, "", x, y)
+    cpp += s
 
-    used = {s}
-    q = Queue()
-    q.put(s)
-    result = "没有结果"
-    while q.qsize() != 0:
-        s = q.get()
-        if s.isAns():
-            result = s.path
-            break
-        t = s.up_mov()
-        if t not in used:
-            q.put(t)
-            used.add(t)
-        t = s.down_mov()
-        if t not in used:
-            q.put(t)
-            used.add(t)
-        t = s.left_mov()
-        if t not in used:
-            q.put(t)
-            used.add(t)
-        t = s.right_mov()
-        if t not in used:
-            q.put(t)
-            used.add(t)
-    print(result)
+    f = os.popen(cpp)
+    data = f.readlines()
+    f.close()
+    print(data[0])
