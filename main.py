@@ -25,4 +25,7 @@ if __name__ == '__main__':
     f = os.popen(cpp)
     data = f.readlines()
     f.close()
-    print(data[0])
+    result = data[0]
+    results = result.split(",")
+    print(results.__len__())
+    print(results)
