@@ -137,10 +137,10 @@ string full(node n,int swap){
 }
 
 int main(int argc, char *arg[]){
-//	int a[9] = {0, 8, 6, 5, 4, 1, 2, 3, 9};
-//	int swap = 18;
-//	int from = 1;
-//	int to =3;
+//	int a[9] = {6, 0, 4, 2, 7, 5, 1, 6, 8};
+//	int swap = 17;
+//	int from = 8;
+//	int to = 7;
 	int a[9];
 	for(int i=1;i<10;i++) a[i-1] = atoi(arg[i]);
 	int swap = atoi(arg[10]);
@@ -185,16 +185,16 @@ int main(int argc, char *arg[]){
 			ready_swap.push(now);
 		}
 		
-		
-		if(now.step == swap){
-			continue;
-		}
-		
 		if(is_ans(now)){
 			result = now.path;
 			//print(now);
 			break;
 		}
+		
+		if(now.step == swap){
+			continue;
+		}
+		
 		up(now);
 		down(now);
 		right(now);

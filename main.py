@@ -1,10 +1,11 @@
 import os
 from getImage import ImageDeal
+from sendResult import send
 
 if __name__ == '__main__':
 
     filePath = 'test.jpg'
-    url = "http://47.102.118.1:8089/api/problem?stuid=031802230"
+    url = "http://47.102.118.1:8089/api/problem?stuid=031802604"
     l, swap, step, uuid = ImageDeal(url, filePath)
 
     print(l)
@@ -25,7 +26,7 @@ if __name__ == '__main__':
     f = os.popen(cpp)
     data = f.readlines()
     f.close()
-    result = data[0]
-    results = result.split(",")
-    print(results.__len__())
-    print(results)
+
+    print(data[0])
+
+    send(uuid, data[0])
