@@ -125,7 +125,6 @@ string full(node n,int swap){
 	string tmp = "";
 	
 	if(n.i != 2) tmp = "sw";
-	else if(n.j != 2) tmp = "ad";
 	else tmp = "ws";
 	
 	string res = "";
@@ -137,16 +136,15 @@ string full(node n,int swap){
 }
 
 int main(int argc, char *arg[]){
-//	int a[9] = {6, 0, 4, 2, 7, 5, 1, 6, 8};
-//	int swap = 17;
-//	int from = 8;
-//	int to = 7;
+//	int a[9] = {4, 0, 1, 7, 5, 8, 6, 9, 2};
+//	int swap = 19;
+//	int from = 9;
+//	int to = 5;
 	int a[9];
 	for(int i=1;i<10;i++) a[i-1] = atoi(arg[i]);
 	int swap = atoi(arg[10]);
 	int from = atoi(arg[11]);
 	int to = atoi(arg[12]);
-	swap--;
 	from--;
 	to--;
 	
@@ -164,24 +162,30 @@ int main(int argc, char *arg[]){
 		}
 	}
 	
-	is_exist[num(first)] = 1;
+	q.push(first);
 	
-	if(swap == -1){
-		ready_swap.push(first);
-	}else{
-		q.push(first);
-	}
+	is_exist[num(first)] = 1;
 	
 	string result = "нч╫А╧Ш";
 	
 	int yu = swap%2;
+	
+//	printf("%d\n",yu);
 	
 	while(!q.empty()){
 		
 		node now = q.front();
 		q.pop();
 		
+		//print(now);
+		
+//		printf("%d\n",now.step);
+//		print(now);
+//		cout<<"====================================="<<endl;
+		
 		if(now.step%2 == yu){
+//			printf("%d\n",now.step);
+//			print(now);
 			ready_swap.push(now);
 		}
 		
@@ -213,9 +217,11 @@ int main(int argc, char *arg[]){
       tmp = force_swap(ready_swap.front(),from,to);
       if(tmp.step != swap){
       	tmp.path = full(tmp,swap);
+      	tmp.step = swap;
 	  }
       ready_swap.push(tmp);
       q.push(tmp);
+//    print(tmp) ;
       ready_swap.pop();
    } 
    
@@ -229,6 +235,9 @@ int main(int argc, char *arg[]){
 		if(is_ans(now)){
 			result = now.path;
 			//print(now);
+			if(now.step == swap){
+				result += "w";
+			}
 			break;
 		}
 		up(now);
@@ -264,6 +273,9 @@ int main(int argc, char *arg[]){
 		
 		if(is_ans(now)){
 			tmp = now;
+			if(now.step == swap){
+				tmp.path += "w";
+			}
 			break;
 		}
 		up(now);
