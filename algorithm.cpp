@@ -129,17 +129,17 @@ string full(node n,int swap){
 	
 	string res = "";
 	while(swap--){
-		res +=tmp;
+		res += tmp;
 	}
 	
 	return n.path + res;
 }
 
 int main(int argc, char *arg[]){
-//	int a[9] = {4, 0, 1, 7, 5, 8, 6, 9, 2};
+//	int a[9] = {5, 9, 1, 4, 8, 3, 0, 2, 7};
 //	int swap = 19;
 //	int from = 9;
-//	int to = 5;
+//	int to = 1;
 	int a[9];
 	for(int i=1;i<10;i++) a[i-1] = atoi(arg[i]);
 	int swap = atoi(arg[10]);
@@ -170,28 +170,17 @@ int main(int argc, char *arg[]){
 	
 	int yu = swap%2;
 	
-//	printf("%d\n",yu);
-	
 	while(!q.empty()){
 		
 		node now = q.front();
 		q.pop();
 		
-		//print(now);
-		
-//		printf("%d\n",now.step);
-//		print(now);
-//		cout<<"====================================="<<endl;
-		
 		if(now.step%2 == yu){
-//			printf("%d\n",now.step);
-//			print(now);
 			ready_swap.push(now);
 		}
 		
 		if(is_ans(now)){
 			result = now.path;
-			//print(now);
 			break;
 		}
 		
@@ -214,15 +203,15 @@ int main(int argc, char *arg[]){
 	
 	node tmp;
 	for(int i = 0; i < q_size; i++) {
-      tmp = force_swap(ready_swap.front(),from,to);
-      if(tmp.step != swap){
-      	tmp.path = full(tmp,swap);
-      	tmp.step = swap;
-	  }
-      ready_swap.push(tmp);
-      q.push(tmp);
-//    print(tmp) ;
-      ready_swap.pop();
+		tmp = ready_swap.front();
+		if(tmp.step != swap){
+			tmp.path = full(tmp,swap);
+			tmp.step = swap;
+		}
+		tmp = force_swap(tmp,from,to);
+		ready_swap.push(tmp);
+		q.push(tmp);
+		ready_swap.pop();
    } 
    
    memset(is_exist,0,sizeof(bool)*1000000000);
@@ -234,7 +223,6 @@ int main(int argc, char *arg[]){
 		
 		if(is_ans(now)){
 			result = now.path;
-			//print(now);
 			if(now.step == swap){
 				result += "w";
 			}
@@ -253,15 +241,15 @@ int main(int argc, char *arg[]){
 	
 	node tem;
 	for(int i = 0; i < q_size; i++) {
-      tmp = ready_swap.front();
-      for(int j = 0; j < 8; j++){
-	  	for(int k = j+1; k < 9; k++){
-	  		tem = force_swap(tmp,j,k);
-	  		tem.si = j+1;
-	  		tem.sj = k+1;
-	  		q.push(tem);
+		tmp = ready_swap.front();
+		for(int j = 0; j < 8; j++){
+			for(int k = j+1; k < 9; k++){
+				tem = force_swap(tmp,j,k);
+				tem.si = j+1;
+				tem.sj = k+1;
+				q.push(tem);
+			}
 		}
-	  }
       
       ready_swap.pop();
    } 
