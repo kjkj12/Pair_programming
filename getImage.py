@@ -31,8 +31,8 @@ def compare_images(image_one, image_two):
         return "{0}\n{1}".format(e, "图片大小和box对应的宽度不一致!")
 
 
-def check():
-    f = Image.open("test.jpg")
+def check(path="test.jpg"):
+    f = Image.open(path)
     for f in which_file(f):
         lists = getList(f)
         if lists.__len__() == 9:
