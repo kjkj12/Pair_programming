@@ -22,8 +22,8 @@ def send(uuid, result):
     answer["swap"] = swap
 
     formdata["answer"] = answer
-    print(json.dumps(formdata))
 
     response = requests.post(url, json=formdata, headers=header)
 
+    print(json.dumps(formdata))
     print(response.text)

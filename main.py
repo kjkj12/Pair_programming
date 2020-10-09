@@ -8,15 +8,15 @@ if __name__ == '__main__':
     url = "http://47.102.118.1:8089/api/problem?stuid=031802604"
     l, swap, step, uuid = ImageDeal(url, filePath)
 
-    # l = [4, 0, 1, 7, 5, 8, 6, 9, 2]
-    # step = 19
-    # swap = [9, 5]
-    # uuid = "03daec369b5e434583b48445113ef409"
+    # l = [1, 2, 4, 3, 0, 6, 7, 8, 9]
+    # step = 0
+    # swap = [4, 3]
+    # uuid = "c150a4f339d94150b4882f48d5896e0d"
 
-    print(l)
-    print(step)
-    print(swap)
-    print(uuid)
+    # print(l)
+    # print(step)
+    # print(swap)
+    # print(uuid)
 
     cpp = "algorithm.exe "
     s = ""
@@ -32,6 +32,8 @@ if __name__ == '__main__':
     data = f.readlines()
     f.close()
 
-    print(data[0])
+    if not data:
+        send(uuid, "")
+    else:
+        send(uuid, data[0])
 
-    send(uuid, data[0])
