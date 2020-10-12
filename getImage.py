@@ -34,13 +34,13 @@ def compare_images(image_one, image_two):
 def check(path="test.jpg"):
     f = Image.open(path)
     for f in which_file(f):
-        lists = getList(f)
+        lists = getList(f, path)
         if lists.__len__() == 9:
             return lists
 
 
-def getList(fp):
-    f = Image.open("test.jpg")
+def getList(fp, path="test.jpg"):
+    f = Image.open(path)
     base = 300
     lists = list()
     for i in range(3):
