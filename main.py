@@ -2,10 +2,18 @@ import os
 from getImage import ImageDeal
 from sendResult import send
 
+
+def makeCpp(cUrl):
+    f = os.popen(cUrl)
+    dat = f.readlines()
+    f.close()
+    return dat
+
+
 if __name__ == '__main__':
 
     filePath = 'test.jpg'
-    url = "http://47.102.118.1:8089/api/problem?stuid=031802604"
+    url = "http://47.102.118.1:8089/api/problem?stuid=031802633"
     l, swap, step, uuid = ImageDeal(url, filePath)
 
     # l = [1, 2, 4, 3, 0, 6, 7, 8, 9]
@@ -28,12 +36,9 @@ if __name__ == '__main__':
 
     cpp += s
 
-    f = os.popen(cpp)
-    data = f.readlines()
-    f.close()
+    data = makeCpp(cpp)
 
     if not data:
         send(uuid, "")
     else:
         send(uuid, data[0])
-

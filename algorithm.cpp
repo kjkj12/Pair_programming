@@ -223,9 +223,6 @@ int main(int argc, char *arg[]){
 		
 		if(is_ans(now)){
 			result = now.path;
-			if(now.step == swap){
-				result += "w";
-			}
 			break;
 		}
 		up(now);
@@ -261,9 +258,6 @@ int main(int argc, char *arg[]){
 		
 		if(is_ans(now)){
 			tmp = now;
-			if(now.step == swap){
-				tmp.path += "w";
-			}
 			break;
 		}
 		up(now);

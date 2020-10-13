@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     filePath = 'test.jpg'
     baseUrl = "http://47.102.118.1:8089/api"
-    listUrl = baseUrl + "/challenge/list"
+    listUrl = baseUrl + " /team/problem/11"
     questionUrl = baseUrl + "/challenge/start/"
     submitUrl = baseUrl + "/challenge/submit"
 
@@ -47,8 +47,6 @@ if __name__ == '__main__':
     print(qs)
     for q in qs:
         if q["author"] == 11:
-            continue
-        if q["pubtimestamp"] < 1602516715.5083148:
             continue
         uuid = q["uuid"]
 
