@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     filePath = 'test.jpg'
     baseUrl = "http://47.102.118.1:8089/api"
-    listUrl = baseUrl + " /team/problem/11"
+    listUrl = baseUrl + "/team/problem/11"
     questionUrl = baseUrl + "/challenge/start/"
     submitUrl = baseUrl + "/challenge/submit"
 

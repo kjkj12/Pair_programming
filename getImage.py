@@ -85,7 +85,6 @@ def which_file(f):
     files = os.listdir(path)
     for file in files:
         if is_in(path + '/' + file, region):
-            print(file)
             yield path + '/' + file
 
 

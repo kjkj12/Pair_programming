@@ -19,6 +19,20 @@ queue<node> q;
 
 queue<node> ready_swap;
 
+bool hasResult(node n) {
+	bool res = true;
+	for(int i=0;i<9;i++){
+		if(n.maze[i/3][i%3]){
+			for(int j=0;j<i;j++){
+				if(n.maze[i/3][i%3]<n.maze[j/3][j%3]){
+					res = !res;
+				}
+			}	
+		}
+	}
+	return res;
+}
+
 int num(node n){
 	
 	int t = 0;
@@ -136,10 +150,10 @@ string full(node n,int swap){
 }
 
 int main(int argc, char *arg[]){
-//	int a[9] = {5, 9, 1, 4, 8, 3, 0, 2, 7};
-//	int swap = 19;
+//	int a[9] = {3, 7, 5, 8, 1, 6, 4, 2, 0};
+//	int swap = 20;
 //	int from = 9;
-//	int to = 1;
+//	int to = 6;
 	int a[9];
 	for(int i=1;i<10;i++) a[i-1] = atoi(arg[i]);
 	int swap = atoi(arg[10]);
@@ -202,6 +216,7 @@ int main(int argc, char *arg[]){
 	int q_size = ready_swap.size();
 	
 	node tmp;
+	node tem;
 	for(int i = 0; i < q_size; i++) {
 		tmp = ready_swap.front();
 		if(tmp.step != swap){
@@ -209,49 +224,24 @@ int main(int argc, char *arg[]){
 			tmp.step = swap;
 		}
 		tmp = force_swap(tmp,from,to);
-		ready_swap.push(tmp);
-		q.push(tmp);
+		if(hasResult(tmp)){
+			q.push(tmp);
+		}else{
+			for(int j = 0; j < 8; j++){
+				for(int k = j+1; k < 9; k++){
+					tem = force_swap(tmp,j,k);
+					tem.si = j+1;
+					tem.sj = k+1;
+					if(hasResult(tem)) q.push(tem);
+				}
+			}
+		}
 		ready_swap.pop();
    } 
    
    memset(is_exist,0,sizeof(bool)*1000000000);
    
    while(!q.empty()){
-		
-		node now = q.front();
-		q.pop();
-		
-		if(is_ans(now)){
-			result = now.path;
-			break;
-		}
-		up(now);
-		down(now);
-		right(now);
-		left(now);
-	}
-	
-	if(result != "нч╫А╧Ш"){
-		cout<<result;
-		return 0;
-	}
-	
-	node tem;
-	for(int i = 0; i < q_size; i++) {
-		tmp = ready_swap.front();
-		for(int j = 0; j < 8; j++){
-			for(int k = j+1; k < 9; k++){
-				tem = force_swap(tmp,j,k);
-				tem.si = j+1;
-				tem.sj = k+1;
-				q.push(tem);
-			}
-		}
-      
-      ready_swap.pop();
-   } 
-	
-	while(!q.empty()){
 		
 		node now = q.front();
 		q.pop();
@@ -266,9 +256,11 @@ int main(int argc, char *arg[]){
 		left(now);
 	}
 	
-	cout<<tmp.path<<",";
-	cout<<tmp.si<<",";
-	cout<<tmp.sj;
+	cout<<tmp.path;
+	if(tmp.si){
+		cout<<","<<tmp.si;
+		cout<<","<<tmp.sj;
+	}
 	
 	return 0;
 } 
