@@ -10,11 +10,11 @@ typedef struct node{
 	int maze[3][3];
 	int step;
 	string path;
-	int si,sj;
+	int si = 0,sj = 0;
 	
 }node;
 
-bool is_exist[1000000000] = {0};
+bool is_exist[100000000] = {0};
 queue<node> q;
 
 queue<node> ready_swap;
@@ -38,7 +38,8 @@ int num(node n){
 	int t = 0;
 	for(int i=0;i<3;i++){
 		for(int j=0;j<3;j++){
-			t = t*10 + n.maze[i][j];
+			if(i||j)
+				t = t*10 + n.maze[i][j];
 		}
 	}
 	
@@ -150,10 +151,10 @@ string full(node n,int swap){
 }
 
 int main(int argc, char *arg[]){
-//	int a[9] = {3, 7, 5, 8, 1, 6, 4, 2, 0};
+//	int a[9] = {0, 1, 2, 7, 8, 5, 4, 3, 6};
 //	int swap = 20;
 //	int from = 9;
-//	int to = 6;
+//	int to = 1;
 	int a[9];
 	for(int i=1;i<10;i++) a[i-1] = atoi(arg[i]);
 	int swap = atoi(arg[10]);
@@ -239,7 +240,7 @@ int main(int argc, char *arg[]){
 		ready_swap.pop();
    } 
    
-   memset(is_exist,0,sizeof(bool)*1000000000);
+   memset(is_exist,0,sizeof(bool)*100000000);
    
    while(!q.empty()){
 		

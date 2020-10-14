@@ -21,10 +21,10 @@ if __name__ == '__main__':
     # swap = [4, 3]
     # uuid = "c150a4f339d94150b4882f48d5896e0d"
 
-    # print(l)
-    # print(step)
-    # print(swap)
-    # print(uuid)
+    print(l)
+    print(step)
+    print(swap)
+    print(uuid)
 
     cpp = "algorithm.exe "
     s = ""
