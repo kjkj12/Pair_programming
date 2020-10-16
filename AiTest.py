@@ -46,8 +46,6 @@ if __name__ == '__main__':
 
     print(qs)
     for q in qs:
-        if q["author"] == 11:
-            continue
         uuid = q["uuid"]
 
         path = p + uuid + '.jpg'

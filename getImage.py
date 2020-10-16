@@ -1,10 +1,12 @@
 import base64
 import os
 
+import imagehash
 import requests
 import json
 
-from PIL import ImageChops, Image
+from PIL import Image
+from PIL.ImageFile import ImageFile
 
 
 def request(url, path):
@@ -17,25 +19,25 @@ def request(url, path):
     return jsons.get("swap"), jsons.get("step"), jsons.get('uuid')
 
 
-def compare_images(image_one, image_two):
-    try:
-        diff = ImageChops.difference(image_one, image_two)
-
-        if diff.getbbox() is None:
-            # 图片间没有任何不同则直接退出
-            return True
-        else:
-            return False
-
-    except ValueError as e:
-        return "{0}\n{1}".format(e, "图片大小和box对应的宽度不一致!")
+def compare_images(image_one, image_two, max_dif=0):
+    ImageFile.LOAD_TRUNCATED_IMAGES = True
+    hash_1 = imagehash.average_hash(image_one)
+    hash_2 = imagehash.average_hash(image_two)
+    dif = hash_1 - hash_2
+    if dif < 0:
+        dif = -dif
+    if dif <= max_dif:
+        return True
+    else:
+        return False
 
 
 def check(path="test.jpg"):
     f = Image.open(path)
-    for f in which_file(f):
-        lists = getList(f, path)
+    for ls in which_file(f):
+        lists = getList(ls, path)
         if lists.__len__() == 9:
+            print(ls)
             return lists
 
 

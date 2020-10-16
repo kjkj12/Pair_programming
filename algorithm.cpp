@@ -15,6 +15,7 @@ typedef struct node{
 }node;
 
 bool is_exist[100000000] = {0};
+bool is_exists[100000000] = {0};
 queue<node> q;
 
 queue<node> ready_swap;
@@ -110,6 +111,58 @@ void right(node n){
 	} 
 }
 
+void up1(node n){
+	if(n.i!=0){
+		swap(n.maze[n.i][n.j],n.maze[n.i-1][n.j]);
+		if(!is_exists[num(n)]){
+			n.path += "w";
+			n.i--;
+			n.step++;
+			is_exists[num(n)] = 1;
+			q.push(n);
+		}
+	} 
+}
+
+void down1(node n){
+	if(n.i!=2){
+		swap(n.maze[n.i][n.j],n.maze[n.i+1][n.j]);
+		if(!is_exists[num(n)]){
+			n.path += "s";
+			n.i++;
+			n.step++;
+			is_exists[num(n)] = 1;
+			q.push(n);
+		}
+	} 
+}
+
+void left1(node n){
+	if(n.j!=0){
+		swap(n.maze[n.i][n.j],n.maze[n.i][n.j-1]);
+		if(!is_exists[num(n)]){
+			n.path += "a";
+			n.j--;
+			n.step++;
+			is_exists[num(n)] = 1;
+			q.push(n);
+		}
+	} 
+}
+
+void right1(node n){
+	if(n.j!=2){
+		swap(n.maze[n.i][n.j],n.maze[n.i][n.j+1]);
+		if(!is_exists[num(n)]){
+			n.path += "d";
+			n.j++;
+			n.step++;
+			is_exists[num(n)] = 1;
+			q.push(n);
+		}
+	} 
+}
+
 void print(node n){
 	for(int i=0;i<3;i++){
 		for(int j=0;j<3;j++){
@@ -151,10 +204,10 @@ string full(node n,int swap){
 }
 
 int main(int argc, char *arg[]){
-//	int a[9] = {0, 1, 2, 7, 8, 5, 4, 3, 6};
+//	int a[9] = {3, 7, 5, 8, 1, 6, 4, 2, 0};
 //	int swap = 20;
 //	int from = 9;
-//	int to = 1;
+//	int to = 6;
 	int a[9];
 	for(int i=1;i<10;i++) a[i-1] = atoi(arg[i]);
 	int swap = atoi(arg[10]);
@@ -240,8 +293,6 @@ int main(int argc, char *arg[]){
 		ready_swap.pop();
    } 
    
-   memset(is_exist,0,sizeof(bool)*100000000);
-   
    while(!q.empty()){
 		
 		node now = q.front();
@@ -251,10 +302,10 @@ int main(int argc, char *arg[]){
 			tmp = now;
 			break;
 		}
-		up(now);
-		down(now);
-		right(now);
-		left(now);
+		up1(now);
+		down1(now);
+		right1(now);
+		left1(now);
 	}
 	
 	cout<<tmp.path;
