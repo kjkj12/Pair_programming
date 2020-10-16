@@ -100,6 +100,7 @@ if __name__ == '__main__':
                 f.write('\n')
                 f.write(uuid)
             i += 1
+            break
         else:
             print(j["timeelapsed"])
             print("success " + str(k))

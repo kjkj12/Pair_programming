@@ -5,7 +5,7 @@ import imagehash
 import requests
 import json
 
-from PIL import Image
+from PIL import Image, ImageChops
 from PIL.ImageFile import ImageFile
 
 
@@ -32,12 +32,25 @@ def compare_images(image_one, image_two, max_dif=0):
         return False
 
 
+def compare_images_white(image_one, image_two):
+    try:
+        diff = ImageChops.difference(image_one, image_two)
+
+        if diff.getbbox() is None:
+            return True
+        else:
+            return False
+
+    except ValueError as e:
+        return "{0}\n{1}".format(e, "图片大小和box对应的宽度不一致!")
+
+
 def check(path="test.jpg"):
     f = Image.open(path)
     for ls in which_file(f):
         lists = getList(ls, path)
         if lists.__len__() == 9:
-            print(ls)
+            # print(ls)
             return lists
 
 
@@ -105,7 +118,7 @@ def is_in(fp, r):
 
 def is_zero(region):
     space = Image.open("space.jpg")
-    if compare_images(space, region):
+    if compare_images_white(space, region):
         return True
     else:
         return False
