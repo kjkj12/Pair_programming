@@ -36,8 +36,8 @@ if __name__ == '__main__':
     questionUrl = baseUrl + "/challenge/start/"
     submitUrl = baseUrl + "/challenge/submit"
 
-    i = 20
-    k = 0
+    ia = 0
+    k = 108
     qs = requests.get(listUrl)
     qs = qs.text
     print(qs)
@@ -89,8 +89,8 @@ if __name__ == '__main__':
         j = json.loads(responses.text)
         if not j["success"]:
             print(j["timeelapsed"])
-            print("error   " + str(i))
-            with open('error/' + str(i) + '.txt', mode="w") as f:
+            print("error   " + str(ia) + " " + uuid)
+            with open('error/' + uuid + '.txt', mode="w") as f:
                 f.write(responses.text)
                 f.write(str(l))
                 f.write('\n')
@@ -99,12 +99,12 @@ if __name__ == '__main__':
                 f.write(s)
                 f.write('\n')
                 f.write(uuid)
-            i += 1
+            ia += 1
             break
         else:
             print(j["timeelapsed"])
-            print("success " + str(k))
-            with open('success/' + str(k) + '.txt', mode="w") as f:
+            print("success " + str(k) + " " + uuid)
+            with open('success/' + uuid + '.txt', mode="w") as f:
                 f.write(responses.text)
                 f.write(str(l))
                 f.write('\n')
